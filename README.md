@@ -27,14 +27,38 @@ cd LLM-Rubric
 poetry install
 ```
    
-
-
-
-
-
-
-
 # Paper Experiments
+
+## Real Conversation Data
+
+### Baselines
+
+To compute baselines, run `bash scripts/run_real_data_baselines.sh`.
+
+It will print out results for each criteria like so:
+
+```sh
+                              rmse   pearson  spearman   kendall    N      mean           std
+criterion system
+Q1        random          1.589779 -0.087296 -0.072304 -0.061741  146  2.390411  1.124894e+00
+          group_constant  0.900420       NaN       NaN       NaN  146  3.213605  0.000000e+00
+          ann_constant    1.055296 -0.008433 -0.017450 -0.011765  146  3.044042  5.892783e-01
+          sample_llm      1.069503 -0.026344 -0.036366 -0.032842  146  2.773973  5.706347e-01
+          argmax_llm      0.914121 -0.198756 -0.226180 -0.211648  146  2.972603  1.632380e-01
+          expected_llm    0.894389  0.040721  0.048520  0.036537  146  2.773374  1.292079e-01
+Q2        random          1.630703 -0.036446  0.012197  0.012741  223  2.484305  1.103795e+00
+          group_constant  0.947655       NaN       NaN       NaN  223  3.397611  8.881784e-16
+          ann_constant    0.785368  0.547249  0.455538  0.375845  223  3.259603  3.976770e-01
+          sample_llm      1.161799 -0.139302 -0.172219 -0.160052  223  2.843049  4.898372e-01
+          argmax_llm      0.965782 -0.058163 -0.068355 -0.064493  223  2.991031  1.336293e-01
+          expected_llm    1.004312 -0.078251 -0.050007 -0.037454  223  2.864326  1.398593e-01
+...
+```
+
+**TODO** Add definition of baselines.
+
+
+
 
 ## Data Preprocessing
 
