@@ -1,6 +1,34 @@
 
 
 
+# Installation
+
+1. Install [Poetry](https://python-poetry.org/docs/#installing-with-the-official-installer).
+2. Create and activate a virtual environment with `python 3.10`. For example with conda: 
+```bash
+conda create -n llm-rubric python=3.10
+conda activate llm-rubric
+```
+**Make sure your virtual environment is activated when performing steps 3 and 4.**
+
+3. Install `pytorch 2.3.0`.
+```bash
+
+# OSX
+pip install torch==2.3.0
+
+# Linux and Windows
+pip install torch==2.3.0 --index-url https://download.pytorch.org/whl/cpu
+```
+4. Install LLM-Rubric.
+```bash
+git clone https://github.com/microsoft/LLM-Rubric.git
+cd LLM-Rubric
+poetry install
+```
+   
+
+
 
 
 
