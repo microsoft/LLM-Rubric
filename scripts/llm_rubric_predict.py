@@ -104,18 +104,17 @@ def main(
 
     ds_test = pd_utils.make_dataset(data_df, input_criteria, judge_id_column, output_criteria)
     
-    print("test Loss (FT)", model.loss(ds_test.X, ds_test.A, ds_test.Y, I=[-1]).detach().numpy()) 
+    # print("test Loss (FT)", model.loss(ds_test.X, ds_test.A, ds_test.Y, I=[-1]).detach().numpy()) 
     yhat = model.decode(ds_test.X, ds_test.A, I=[-1])[:, 0].detach().numpy()
     y = ds_test.Y[:,-1].detach().numpy()
-    rmse = metrics.root_mean_squared_error(y, yhat)
+    # rmse = metrics.root_mean_squared_error(y, yhat) -- For RMSE calculation, make sure to train the model with the rmse loss.
     p_corr, _ = stats.pearsonr(y, yhat)
     s_corr, _ = stats.spearmanr(y, yhat)
     t_corr, _ = stats.kendalltau(y, yhat)
-    print("test rmse", rmse) 
+    # print("test rmse", rmse) -- see the note above about RMSE calculation 
     print("test pearsonr", p_corr) 
     print("test spearmanr", s_corr) 
     print("test kendallt", t_corr) 
-
 
 
 if __name__ == "__main__":

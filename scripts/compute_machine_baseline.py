@@ -21,12 +21,11 @@ def main(
     human_df = pd.read_csv(human_path, sep="\t")
     llm_answer_prob_columns = ["answer1_prob", "answer2_prob", "answer3_prob", "answer4_prob"]
     
-    # Fix not summing to 1 for 3 point questions.
     for idx, row in machine_df.iterrows():
         if row[llm_answer_prob_columns].sum() < 1.0:
-            r = (1.0 - row[llm_answer_prob_columns].sum()) / 3
-            for c in llm_answer_prob_columns[:3]:
-                machine_df.at[idx, c] += r
+            s = row[llm_answer_prob_columns].sum()
+            for c in llm_answer_prob_columns:
+                machine_df.at[idx, c] /= s
 
     scores = np.array([[1.0, 2.0, 3.0, 4.0]]).T
     machine_df["expected_llm"] = machine_df[llm_answer_prob_columns].values @ scores

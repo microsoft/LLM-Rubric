@@ -32,4 +32,6 @@ python scripts/evaluate.py \
     experiments/real_data/predictions/real_convs_human_baselines.tsv \
     experiments/real_data/predictions/real_convs_machine_baselines.tsv \
     --human-judgments data/real_data/human_judges_real_convs_FIXED_ANON.tsv \
-    --systems "random,group_constant,ann_constant,sample_llm,argmax_llm,expected_llm" 
+    --systems "random,sample_llm,argmax_llm,expected_llm" \
+    --criteria "Q0"
+

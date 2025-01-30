@@ -1,0 +1,1 @@
+{"input_size": 36, "output_size": 9, "num_judges": 13, "all_data_size": 223, "finetune_output": -1, "num_answers": 4, "batch_size": 64, "learning_rate": 0.001, "layer1_size": 25, "layer2_size": 25, "pretraining_epochs": 20, "finetuning_epochs": 30, "random_seed": 43}
