@@ -8,4 +8,4 @@ feature request as a new Issue. Please note that there is currently no plan to r
 
 ## Microsoft Support Policy  
 
-Support for this **PROJECT or PRODUCT** is limited to the resources listed above.
+Support for this project is limited to the resources listed above.
