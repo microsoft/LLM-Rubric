@@ -1,3 +1,11 @@
+# About
+LLM-Rubric introduces a framework for the automated evaluation of natural language texts. A manually constructed rubric describes how to assess multiple dimensions of interest. To evaluate a text, a large language model (LLM) is prompted with each rubric question and produces a distribution over potential responses. The LLM predictions often fail to agree well with human judges—indeed, the humans do not fully agree with one another. However, the multiple LLM distributions can be combined to predict each human judge's annotations on all questions, including a summary question that assesses overall quality or relevance. LLM-Rubric accomplishes this by training a small feed-forward neural network that includes both judge-specific and judge-independent parameters. When evaluating dialogue systems in a human-AI information-seeking task, we find that LLM-Rubric with 9 questions (assessing dimensions such as naturalness, conciseness, and citation quality) predicts human judges' assessment of overall user satisfaction, on a scale of 1–4.
+
+For more information, please read the [LLM-Rubric paper](https://aclanthology.org/2024.acl-long.745/) published at ACL 2024.
+
+**Disclaimer**: this repository was created after the original experimentation for the LLM-Rubric paper. By running these codes, you will experience some minor performance differences with the ones reported in the paper due to the updated data sampling and reimplementation in Pytorch (the results presented in the paper are based on a TensorFlow implementation of LLM-Rubric). These minor performance differences do not impact the findings, claims, and generality of the results presented in the original paper.
+
+
 # Installation
 
 1. Install [Poetry](https://python-poetry.org/docs/#installing-with-the-official-installer).
@@ -24,7 +32,7 @@ cd LLM-Rubric
 poetry install
 ```
    
-# Paper Experiments
+# Experiments
 
 ## Real Conversation Data
 
@@ -32,60 +40,33 @@ poetry install
 
 To compute baselines, run `bash scripts/run_real_data_baselines.sh`.
 
-It will print out results for each criteria like so:
+It will print out the results as follows:
 
 ```sh
-                              rmse   pearson  spearman   kendall    N      mean           std
+                            rmse   pearson  spearman   kendall    N      mean       std
 criterion system
-Q1        random          1.589779 -0.087296 -0.072304 -0.061741  146  2.390411  1.124894e+00
-          group_constant  0.900420       NaN       NaN       NaN  146  3.213605  0.000000e+00
-          ann_constant    1.055296 -0.008433 -0.017450 -0.011765  146  3.044042  5.892783e-01
-          sample_llm      1.069503 -0.026344 -0.036366 -0.032842  146  2.773973  5.706347e-01
-          argmax_llm      0.914121 -0.198756 -0.226180 -0.211648  146  2.972603  1.632380e-01
-          expected_llm    0.894389  0.040721  0.048520  0.036537  146  2.773374  1.292079e-01
-Q2        random          1.630703 -0.036446  0.012197  0.012741  223  2.484305  1.103795e+00
-          group_constant  0.947655       NaN       NaN       NaN  223  3.397611  8.881784e-16
-          ann_constant    0.785368  0.547249  0.455538  0.375845  223  3.259603  3.976770e-01
-          sample_llm      1.161799 -0.139302 -0.172219 -0.160052  223  2.843049  4.898372e-01
-          argmax_llm      0.965782 -0.058163 -0.068355 -0.064493  223  2.991031  1.336293e-01
-          expected_llm    1.004312 -0.078251 -0.050007 -0.037454  223  2.864326  1.398593e-01
-...
+Q0        random        1.453309 -0.054438 -0.043663 -0.036858  223  2.587444  1.152196
+          sample_llm    1.207228  0.039810  0.045245  0.040967  223  3.322870  0.794469
+          argmax_llm    1.201643  0.140091  0.086990  0.081134  223  3.614350  0.563597
+          expected_llm  0.918676  0.177301  0.086675  0.065928  223  3.282864  0.300516
 ```
 
-**TODO** Add definition of baselines.
+Please refer to the LLM-Rubric paper for the definition of baseline methods.
 
 ### Train LLM-Rubric on synthetic data and evaluate on real data.
 
-1. Find the best hyperparemeters on the synthetic data. `bash scripts/find_hyperparams_for_real_data_eval.sh`
-2. Train LLM-Rubric with best hyperparameters on synthetic data. `bash scripts/train_llm_rubric_for_real_data_eval.sh`
-3. Predict LLM-Rubric on real data. `bash scripts/predict_llm_rubric_for_real_data_eval.sh`. **TODO** separate this into two steps, 1 step to write predictions to file, and 2nd step to run evaluate.py on results.
-
-
-## Data Preprocessing
-
-Note: This section is for recording the experiment process for reproducibility.
-These steps have already be done and you should just use the preprocessed data
-in `data/synth_data` and `data/real_data/`.
-
-### Real Human Conversations Data
-
-Raw data collected from the dialogue annotation interface is located in `data/real_data/raw_real_data.pkl`. To extract a tsv file run 
-
-```bash
-python scripts/extract_db_convs.py \
-  --raw-data-pkl data/real_data/raw_real_data.pkl \
-  --output-path data/real_data/human_judges_real_convs.tsv
+#### Hyperparameter setting (no action needed)
+The best hyperparameters based on the synthetic data are stored in `experiments/real_data/best_synth_cross-validation_hp.json`. This file contains the following selected hyperparameters:
+```sh
+{"input_size": 36, "output_size": 9, "num_judges": 13, "all_data_size": 223, "finetune_output": -1, "num_answers": 4, "batch_size": 64, "learning_rate": 0.001, "layer1_size": 25, "layer2_size": 25, "pretraining_epochs": 20, "finetuning_epochs": 30, "random_seed": 43}
 ```
+If you try to find the best hyperparameters on your own data, you can use the following script: `bash scripts/find_hyperparams_for_real_data_eval.sh`
 
+#### Training LLM-Rubric on synthetic data
+Train LLM-Rubric with best hyperparameters on synthetic data using the following script: `bash scripts/train_llm_rubric_for_real_data_eval.sh`
 
-Run fixing script to make question numbering consistent with paper (ie Q0 was originally Q11)... TBD
-
-
-Anonymize the annotator names for privacy.
-
-```bash
-python scripts/anon_data.py data/synth_data/human_judges_synth_all_FIXED.tsv data/real_data/human_judges_real_convs_FIXED.tsv 
-```
+#### Prediction and evaluation
+Predict LLM-Rubric on real data and evaluate the results using the following script: `bash scripts/predict_llm_rubric_for_real_data_eval.sh`.
 
 
 # Project
