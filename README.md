@@ -67,7 +67,16 @@ Train LLM-Rubric with best hyperparameters on synthetic data using the following
 
 #### Prediction and evaluation
 Predict LLM-Rubric on real data and evaluate the results using the following script: `bash scripts/predict_llm_rubric_for_real_data_eval.sh`.
-
+This step produces the following output:
+```sh
+Number of judges
+24
+Total rows: 223
+9 4
+test pearsonr 0.31304019363805424
+test spearmanr 0.367664375396213
+test kendallt 0.29084198763627717
+```
 
 ## Contributing
 
