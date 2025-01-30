@@ -1,4 +1,4 @@
-# About
+# LLM-Rubric
 LLM-Rubric introduces a framework for the automated evaluation of natural language texts. A manually constructed rubric describes how to assess multiple dimensions of interest. To evaluate a text, a large language model (LLM) is prompted with each rubric question and produces a distribution over potential responses. The LLM predictions often fail to agree well with human judges—indeed, the humans do not fully agree with one another. However, the multiple LLM distributions can be combined to predict each human judge's annotations on all questions, including a summary question that assesses overall quality or relevance. LLM-Rubric accomplishes this by training a small feed-forward neural network that includes both judge-specific and judge-independent parameters. When evaluating dialogue systems in a human-AI information-seeking task, we find that LLM-Rubric with 9 questions (assessing dimensions such as naturalness, conciseness, and citation quality) predicts human judges' assessment of overall user satisfaction, on a scale of 1–4.
 
 For more information, please read the [LLM-Rubric paper](https://aclanthology.org/2024.acl-long.745/) published at ACL 2024.
@@ -68,19 +68,6 @@ Train LLM-Rubric with best hyperparameters on synthetic data using the following
 #### Prediction and evaluation
 Predict LLM-Rubric on real data and evaluate the results using the following script: `bash scripts/predict_llm_rubric_for_real_data_eval.sh`.
 
-
-# Project
-
-
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
-
-As the maintainer of this project, please make a few updates:
-
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
 
 ## Contributing
 
