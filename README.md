@@ -5,6 +5,29 @@ For more information, please read the [LLM-Rubric paper](https://aclanthology.or
 
 **Disclaimer**: this repository was created after the original experimentation for the LLM-Rubric paper. By running these codes, you will experience some minor performance differences with the ones reported in the paper due to the updated data sampling and reimplementation in Pytorch (the results presented in the paper are based on a TensorFlow implementation of LLM-Rubric). These minor performance differences do not impact the findings, claims, and generality of the results presented in the original paper.
 
+# Citation Information
+Helia Hashemi, Jason Eisner, Corby Rosset, Benjamin Van Durme, Chris Kedzie. "LLM-Rubric: A Multidimensional, Calibrated Approach to Automated Evaluation of Natural Language Texts" In Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), pp. 13806–13834, 2024.
+
+```
+@inproceedings{hashemi-etal-2024-llm,
+    title = "{LLM-Rubric: A Multidimensional, Calibrated Approach to Automated Evaluation of Natural Language Texts}",
+    author = "Hashemi, Helia  and
+      Eisner, Jason  and
+      Rosset, Corby  and
+      Van Durme, Benjamin  and
+      Kedzie, Chris",
+    booktitle = "Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = aug,
+    year = "2024",
+    address = "Bangkok, Thailand",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.acl-long.745/",
+    doi = "10.18653/v1/2024.acl-long.745",
+    pages = "13806--13834",
+}
+```
+
+
 
 # Installation
 
