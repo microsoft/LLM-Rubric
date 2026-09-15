@@ -99,7 +99,7 @@ def main(
         **hp_args,
     )
     model = PersonalizedCalibrationNetwork(hp)
-    model.load_state_dict(torch.load(model_path))
+    model.load_state_dict(torch.load(model_path, weights_only=True))
     model.eval()
 
     ds_test = pd_utils.make_dataset(data_df, input_criteria, judge_id_column, output_criteria)
